@@ -9,7 +9,7 @@
 
 ## What This Project Does
 
-Most housing price models only look at numbers — bedrooms, area, location. But a house's photo tells you a lot too: how well-maintained it is, the curb appeal, the overall condition. This project combines **both** — structured data and house images — to predict housing prices more accurately.
+Most housing price models only look at numbers , bedrooms, area, location. But a house's photo tells you a lot too: how well-maintained it is, the curb appeal, the overall condition. This project combines **both**  structured data and house images to predict housing prices more accurately.
 
 That's what multimodal ML is: using more than one type of data at the same time.
 
@@ -17,20 +17,20 @@ That's what multimodal ML is: using more than one type of data at the same time.
 
 ## Dataset
 
-- **Tabular data** — 500 houses with features like area, bedrooms, bathrooms, garage, year built, lot size, overall quality, location score, pool, and basement
-- **Image data** — one photo per house (224×224), where visual quality reflects the house condition and price tier
+- **Tabular data**  500 houses with features like area, bedrooms, bathrooms, garage, year built, lot size, overall quality, location score, pool, and basement
+- **Image data**  one photo per house (224×224), where visual quality reflects the house condition and price tier
 - **Target** — `price` in USD
 
 ---
 
 ## How It Works
 
-### Step 1 — Extract Image Features (CNN)
+### Extract Image Features (CNN)
 Each house photo goes through **ResNet-18**, a pre-trained CNN. Instead of classifying the image, we pull the 512-dimensional feature vector from the second-to-last layer. These vectors capture visual patterns like brightness, structure, and texture.
 
 Then we apply **PCA** to reduce 512 → 64 dimensions to avoid overfitting on a small dataset.
 
-### Step 2 — Combine with Tabular Data
+###  Combine with Tabular Data
 We concatenate the 64 image features with the 10 tabular features, giving us a 74-feature input for every house.
 
 ```
@@ -40,7 +40,7 @@ Image → ResNet → PCA  ──┘
        (64 features)
 ```
 
-### Step 3 — Train & Compare
+###  Train & Compare
 We train three models to show the value of each modality:
 
 | Model | Input | Algorithm |
@@ -49,10 +49,10 @@ We train three models to show the value of each modality:
 | Image Only | 64 CNN features | Ridge Regression |
 | **Multimodal** | 74 combined features | **Gradient Boosting** |
 
-### Step 4 — Evaluate
+###  Evaluate
 We measure performance using:
-- **MAE** — average dollar error per prediction
-- **RMSE** — penalizes larger errors more heavily
+- **MAE**  average dollar error per prediction
+- **RMSE**  penalizes larger errors more heavily
 
 ---
 
@@ -109,8 +109,8 @@ Open `http://localhost:8501` — enter house details, upload a photo, and get a 
 
 ## Key Takeaways
 
-- Images carry real predictive signal even without labels — a CNN trained on ImageNet learns general visual patterns that transfer to house quality assessment
-- PCA is important when you have more features than samples — without it the model overfits
+- Images carry real predictive signal even without labels, a CNN trained on ImageNet learns general visual patterns that transfer to house quality assessment
+- PCA is important when you have more features than samples,  without it the model overfits
 - Fusing both modalities beats either one alone, which is exactly the point of multimodal learning
 - With real house photos (not synthetic), the image modality would contribute even more
 
